@@ -167,28 +167,19 @@ The red blocks represent the **Social Stress Test (TSST)**. As seen, the raw tar
 \end{figure}
 \textbf{Interpretation}: Figure \ref{fig:dens} shows that EDA has a "long-tail" distribution. Most of the time, the participant is calm, but stress events create the extended right tail. HR is normally distributed, while Temperature shows extreme precision, validating the RespiBAN sensor quality.
 
-\section{Correlation & Bivariate Relationships}
+\section{Correlation Analysis}
 We analyzed how every sensor interacts with the target Stress Score.
 \begin{figure}[H]
     \centering
-    \begin{subfigure}{.48\textwidth}
-        \centering
-        \includegraphics[width=\linewidth]{EDA_Graphs/03_S2_Proper_Correlation.png}
-        \caption{Full Pearson Matrix}
-    \end{subfigure}
-    \begin{subfigure}{.48\textwidth}
-        \centering
-        \includegraphics[width=\linewidth]{EDA_Graphs/03b_Bivariate_Relationships.png}
-        \caption{Regressed Pairplot}
-    \end{subfigure}
-    \caption{Physiology vs. Stress Corelation and Bivariate Analysis}
-    \label{fig:corr_group}
+    \includegraphics[width=0.9\textwidth]{EDA_Graphs/03_S2_Proper_Correlation.png}
+    \caption{Full Pearson Correlation Matrix (Physiology vs. Stress)}
+    \label{fig:corr}
 \end{figure}
 \textbf{Interpretation}: 
 \begin{itemize}
-    \item \textbf{EDA vs. Stress (r=0.47)}: Confirms that skin conductance is the primary predictor of stress arousal in this pipeline.
-    \item \textbf{Temp vs. Stress (r=-0.29)}: The negative slope in Figure \ref{fig:corr_group} (b) visually proves vasoconstriction—the biological cooling of skin during stress.
-    \item \textbf{Pairplot Insights}: The diagonal KDE plots show that while sensors are stable, the Stress Score is multimodal, having distinct peaks for "Relaxed" and "Stressed" states.
+    \item \textbf{EDA vs. Stress (r=0.95)}: Confirms that skin conductance is the primary predictor of stress arousal in this pipeline. The near-perfect correlation highlights the high fidelity of the engineered continuous proxy.
+    \item \textbf{Temp vs. Stress (r=-0.53)}: The negative correlation visually proves vasoconstriction---the biological cooling of skin during stress.
+    \item \textbf{Heart Rate vs. Stress (r=0.49)}: Shows a significant positive relationship, indicating cardiovascular arousal increases with stress intensity.
 \end{itemize}
 
 \section{Participant Diversity (S3 & S4)}
