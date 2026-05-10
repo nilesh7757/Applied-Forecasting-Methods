@@ -1,0 +1,34 @@
+# Datasets
+data/
+*.csv
+!leaderboard.csv
+!final_model_leaderboard.csv
+!s2_proper_continuous.csv
+
+# LaTeX Junk
+*.aux
+*.log
+*.nav
+*.out
+*.snm
+*.toc
+*.lof
+*.lot
+*.fls
+*.fdb_latexmk
+*.synctex.gz
+
+# Python
+__pycache__/
+*.pyc
+
+# Backups and temp
+temp_backup/
+temp/
+*.zip
+*.rar
+
+# PDFs (Keep the final ones)
+!Applied_Forecasting_Report.pdf
+!Applied_Forecasting_Premium_Presentation.pdf
+!Applied_Forecasting_Premium_95Page_Final.pdf

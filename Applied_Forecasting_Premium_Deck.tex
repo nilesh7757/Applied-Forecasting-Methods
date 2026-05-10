@@ -1,0 +1,355 @@
+\documentclass[aspectratio=169, 10pt]{beamer}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{tikz}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{tcolorbox}
+\usepackage{colortbl}
+\usepackage{amsmath}
+\usetikzlibrary{calc, positioning, shadows}
+
+% ==========================================
+% ORIGINAL DESIGN: ONYX & GOLD MINIMALISM
+% ==========================================
+\definecolor{Onyx}{HTML}{1A1A1D}
+\definecolor{WarmGold}{HTML}{C5A059}
+\definecolor{Pearl}{HTML}{FDFDFD}
+\definecolor{Crimson}{HTML}{A31621}
+\definecolor{Steel}{HTML}{5C5C60}
+
+\setbeamercolor{background canvas}{bg=Pearl}
+\setbeamercolor{normal text}{fg=Onyx}
+\setbeamercolor{itemize item}{fg=WarmGold}
+\setbeamercolor{itemize subitem}{fg=Steel}
+
+\setbeamertemplate{navigation symbols}{}
+
+% Custom Header Frame
+\setbeamertemplate{frametitle}{
+    \vspace{0.1cm}
+    \begin{tikzpicture}[remember picture, overlay]
+        \fill[Onyx] (current page.north west) rectangle ($(current page.north east) - (0, 1.2)$);
+        \fill[WarmGold] ($(current page.north west) - (0, 1.2)$) rectangle ($(current page.north east) - (0, 1.25)$);
+        \node[anchor=west, Pearl, font=\Large\bfseries] at ($(current page.north west) + (0.5, -0.6)$) {\insertframetitle};
+    \end{tikzpicture}
+    \vspace{0.7cm}
+}
+
+% Custom Footer Frame
+\setbeamertemplate{footline}{
+    \begin{tikzpicture}[remember picture, overlay]
+        \fill[Steel] (current page.south west) rectangle ($(current page.south east) + (0, 0.4)$);
+        \node[anchor=west, Pearl, font=\tiny] at ($(current page.south west) + (0.2, 0.2)$) {\textbf{Applied Project} \textbar\ High-Resolution Stress Forecasting};
+        \node[anchor=east, Pearl, font=\tiny\bfseries] at ($(current page.south east) + (-0.2, 0.2)$) {\insertframenumber};
+    \end{tikzpicture}
+}
+
+% Macros for Sectioning
+\newcommand{\sectiontitle}[2]{
+    \begin{frame}[plain]
+        \begin{tikzpicture}[remember picture, overlay]
+            \fill[Onyx] (current page.north west) rectangle (current page.south east);
+            \fill[WarmGold] (current page.south west) rectangle ($(current page.north west) + (0.3, 0)$);
+            \node[anchor=west, WarmGold, font=\huge\bfseries] at ($(current page.west) + (1, 1)$) {PART #1};
+            \node[anchor=west, Pearl, font=\LARGE\bfseries] at ($(current page.west) + (1, 0)$) {#2};
+        \end{tikzpicture}
+    \end{frame}
+}
+
+% Macro for Theory Slide
+\newcommand{\modeltheoryslide}[4]{
+    \begin{frame}{#1: Mathematical Foundations}
+        \textbf{\textcolor{WarmGold}{Theoretical Concept}}
+        \vspace{0.1cm}
+        \small #2
+        \vspace{0.3cm}
+        \begin{tcolorbox}[colback=Onyx!5, colframe=Onyx, title=\textbf{Equation Formulation}]
+            #3
+        \end{tcolorbox}
+        \vspace{0.2cm}
+        \begin{tcolorbox}[colback=WarmGold!10, colframe=WarmGold, title=\textbf{Rationale}]
+            \small #4
+        \end{tcolorbox}
+    \end{frame}
+}
+
+% Macro for Result Slide
+\newcommand{\modelresultslide}[6]{
+    \begin{frame}{#1: Results \& Metrics}
+        \begin{columns}[c]
+            \begin{column}{0.68\textwidth}
+                \centering
+                \includegraphics[width=0.98\textwidth, height=0.7\textheight, keepaspectratio]{#2}
+            \end{column}
+            \begin{column}{0.30\textwidth}
+                \begin{tcolorbox}[colback=Pearl, colframe=Onyx, title=\textbf{Performance Table}]
+                    \renewcommand{\arraystretch}{1.3}
+                    \small
+                    \begin{tabular}{|l|l|}
+                        \hline
+                        \rowcolor{Onyx!10} \textbf{Metric} & \textbf{Value} \\ \hline
+                        \textbf{MAE} & \textcolor{Crimson}{\textbf{#3}} \\ \hline
+                        \textbf{RMSE} & #4 \\ \hline
+                        \textbf{MAPE} & #5\% \\ \hline
+                        \textbf{R$^2$} & #6 \\ \hline
+                    \end{tabular}
+                \end{tcolorbox}
+            \end{column}
+        \end{columns}
+    \end{frame}
+}
+
+% Macro for Concept/Text Slide
+\newcommand{\conceptslide}[3]{
+    \begin{frame}{#1}
+        \textbf{\textcolor{WarmGold}{#2}}
+        \vspace{0.4cm}
+        \begin{itemize}
+            #3
+        \end{itemize}
+    \end{frame}
+}
+
+% Macro for Image Slide
+\newcommand{\imageslide}[3]{
+    \begin{frame}{#1}
+        \centering
+        \includegraphics[width=0.95\textwidth, height=0.7\textheight, keepaspectratio]{#2}
+        \vspace{0.2cm}
+        \begin{tcolorbox}[colback=WarmGold!5, colframe=WarmGold, boxrule=0.5pt, sharp corners]
+            \centering \small \textit{#3}
+        \end{tcolorbox}
+    \end{frame}
+}
+
+\begin{document}
+
+% -------------------------
+% 1. HERO SLIDE
+% -------------------------
+\begin{frame}[plain]
+    \begin{tikzpicture}[remember picture, overlay]
+        \fill[Onyx] (current page.north west) rectangle ($(current page.south west) + (0.6\paperwidth, 0)$);
+        \fill[Pearl] ($(current page.north west) + (0.6\paperwidth, 0)$) rectangle (current page.south east);
+        \draw[WarmGold, line width=3pt] ($(current page.north west) + (0.6\paperwidth, 0)$) -- ($(current page.south west) + (0.6\paperwidth, 0)$);
+        
+        \node[anchor=west, Pearl, font=\huge\bfseries, text width=7.5cm] at ($(current page.west) + (0.5, 1)$) {Applied Forecasting:\\ Human Stress Pipeline};
+        
+        \node[anchor=west, WarmGold, font=\large, text width=7.5cm] at ($(current page.west) + (0.5, -1)$) {13-Model Comparative Analysis on WESAD Dataset};
+        
+        \node[anchor=east, Onyx, align=right] at ($(current page.east) + (-0.5, 0)$) {
+            \textbf{Group Members}\\[0.2cm]
+            \small Nilesh Mori 202301473\\
+            \small Harsh Maheriya 202301470\\
+            \small Dhanush Pillai 202301483\\
+            \small Megh Jagtap 202303040\\[0.5cm]
+            \textbf{Date:} May 10, 2026
+        };
+    \end{tikzpicture}
+\end{frame}
+
+% -------------------------
+% 2. AGENDA
+% -------------------------
+\begin{frame}{Agenda}
+    \begin{columns}[T]
+        \begin{column}{0.45\textwidth}
+            \begin{tcolorbox}[colback=Onyx!5, colframe=Onyx, title=PHASE A: THE DATA]
+                \small \textbf{1. Intro \& Problem Statement}\\
+                \textbf{2. WESAD Dataset Audit}\\
+                \textbf{3. Preprocessing \& Engineering}
+            \end{tcolorbox}
+            \begin{tcolorbox}[colback=Onyx!5, colframe=Onyx, title=PHASE B: THE FIXES]
+                \small \textbf{4. Data Leakage Solutions}\\
+                \textbf{5. Stationarity Corrections}
+            \end{tcolorbox}
+        \end{column}
+        \begin{column}{0.45\textwidth}
+            \begin{tcolorbox}[colback=WarmGold!10, colframe=WarmGold, title=PHASE C: MODELING]
+                \small \textbf{6. The 13 Models Deep-Dive}\\
+                \textbf{7. Analytical Sensitivity Studies}
+            \end{tcolorbox}
+            \begin{tcolorbox}[colback=WarmGold!10, colframe=WarmGold, title=PHASE D: VERDICT]
+                \small \textbf{8. Final Leaderboard}\\
+                \textbf{9. Discussion \& Conclusion}
+            \end{tcolorbox}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+% ==========================================
+% PART 1: INTRODUCTION
+% ==========================================
+\sectiontitle{I}{Introduction \& Context}
+\conceptslide{The Proactive Mental Health Challenge}{Forecasting vs Detection}{
+    \item Most wearable health monitors are \textbf{reactive}.
+    \item They notify the user when stress is \textbf{already high}.
+    \item \textbf{Our Goal:} A proactive system that predicts increasing stress.
+    \item This enables preventative measures like controlled breathing or rest.
+}
+\conceptslide{Research Scope}{High-Resolution Human Stress}{
+    \item \textbf{Dataset:} WESAD (Wearable Stress and Affect Detection).
+    \item \textbf{Sensors:} Multimodal (EDA, HR, TEMP).
+    \item \textbf{Granularity:} 1Hz resolution (per-second forecasting).
+    \item \textbf{Target:} Next-observed continuous stress intensity.
+}
+\conceptslide{The Impact of Mental Health Forecasting}{Real-World Applications}{
+    \item \textbf{Clinical Support:} Monitoring patients with anxiety disorders.
+    \item \textbf{Occupational Safety:} Early warning for high-risk professions.
+    \item \textbf{Personal Wellness:} Integration into consumer smartwatches.
+}
+
+% ==========================================
+% PART 2: DATASET DESCRIPTION
+% ==========================================
+\sectiontitle{II}{Dataset Description \& Audit}
+\imageslide{Participant Profile: Subject S2}{EDA_Graphs/01_S2_Proper_Timeline.png}{High-resolution synchronization of skin conductance, temperature, and stress intensity.}
+\imageslide{Participant Profile: Subject S3}{EDA_Graphs/01_Subject_S3_Timeline.png}{Audit of Subject S3 to confirm signal consistency.}
+\imageslide{Participant Profile: Subject S4}{EDA_Graphs/01_Subject_S4_Timeline.png}{Audit of Subject S4 showing different baseline physiological levels.}
+\imageslide{Statistical Distribution Analysis}{EDA_Graphs/02_Feature_Density_Analysis.png}{KDE Density plots verifying sensor variance and outliers.}
+\imageslide{Signal Correlation Heatmap}{EDA_Graphs/03_S2_Proper_Correlation.png}{Pearson correlation matrix identifying primary stress predictors.}
+
+% ==========================================
+% PART 3: PIPELINE DEBUGGING
+% ==========================================
+\sectiontitle{III}{Pipeline Debugging: Fixing Critical Errors}
+\conceptslide{The Binary Box Problem}{The Issue with Discrete Labels}{
+    \item WESAD provides labels as 0 (Baseline) or 1 (Stress).
+    \item \textbf{Forecasting Failure:} Plotting raw labels creates vertical "brick walls".
+    \item Linear models cannot learn from perfectly flat 20-minute rectangles.
+    \item \textbf{The Fix:} We created a \textbf{Continuous Proxy} reflecting arousal intensity.
+}
+\conceptslide{The Systemic Data Leakage Crisis}{Identifying the Cheat}{
+    \item Early models used Heart Rate at time $t$ to predict Stress at time $t$.
+    \item Since HR and Stress occur simultaneously, the model was just "looking up" the label.
+    \item \textbf{The Fix:} Strict \textbf{$t-1$ Lag Policy} for all sensor predictors.
+}
+\imageslide{Visualizing Stationarity}{EDA_Graphs/05_Differenced_Signal_Timeline.png}{Differenced stress signal ($d=1$) oscillating stably around a zero mean.}
+
+% ==========================================
+% PART 4: METHODOLOGY
+% ==========================================
+\sectiontitle{IV}{Forecasting Methodology}
+\conceptslide{Statistical Memory Audit}{Determining Optimal Lags}{
+    \item We used ACF and PACF plots to identify signal "memory".
+    \item \textbf{PACF Result:} Lag-2 significance confirmed the AR(2) requirement.
+    \item \textbf{ACF Result:} Lag-3 significance confirmed the MA(3) requirement.
+}
+\imageslide{Lag Diagnostics}{EDA_Graphs/06_Stationary_Lag_Diagnostics.png}{ACF and PACF evidence for (p,q) parameter selection.}
+\conceptslide{The Walk-Forward Protocol}{Simulating Real-World Deployment}{
+    \item Traditional 80/20 splits are invalid for high-frequency biosignals.
+    \item We use \textbf{Rolling Forecasts}: Predict $t+1$, observe $t+1$, append to history, predict $t+2$.
+}
+
+% ==========================================
+% PART 5: THE 13 MODELS
+% ==========================================
+\sectiontitle{V}{The 13 Models Deep-Dive}
+
+% M1
+\modeltheoryslide{Model 1: Naive Persistence}{Assumes today is exactly like tomorrow. The baseline for all forecasting.}{\[ \hat{y}_{t+1} = y_t \]}{Determines if advanced complexity is actually providing predictive value.}
+\modelresultslide{Naive Persistence}{Forecasting_Graphs/00_Naive_(Baseline).png}{0.0211}{0.0345}{8.68}{0.0673}
+
+% M2
+\modeltheoryslide{Model 2: Simple Moving Average}{Averages the last 10 seconds of history to filter out sensor jitter.}{\[ \hat{y}_{t+1} = \frac{1}{10} \sum_{i=0}^9 y_{t-i} \]}{Tests if smoothing the immediate history improves forecast stability.}
+\modelresultslide{SMA-10}{Forecasting_Graphs/00_SMA_(Window=10).png}{0.0229}{0.0326}{9.62}{0.1716}
+
+% M3
+\modeltheoryslide{Model 3: AutoRegressive (AR)}{Models the target as a linear function of its own lagged values.}{\[ y_t = c + \phi_1 y_{t-1} + \phi_2 y_{t-2} + \epsilon_t \]}{Captures the physiological momentum of the stress response.}
+\modelresultslide{AR(2)}{Forecasting_Graphs/03_AR_Optimized.png}{0.0210}{0.0342}{8.66}{0.0840}
+
+% M4
+\modeltheoryslide{Model 4: Moving Average (MA)}{Models the next value based on past forecast errors.}{\[ y_t = \mu + \epsilon_t + \theta_1 \epsilon_{t-1} + \theta_2 \epsilon_{t-2} + \theta_3 \epsilon_{t-3} \]}{Allows the system to rapidly correct itself after sudden sensor spikes.}
+\modelresultslide{MA(3)}{Forecasting_Graphs/04_MA_Optimized.png}{0.0209}{0.0335}{8.72}{0.1236}
+
+% M5
+\modeltheoryslide{Model 5: ARMA(2,3)}{An optimized hybrid of AR and MA components.}{\[ y_t = c + \sum \phi_i y_{t-i} + \epsilon_t + \sum \theta_j \epsilon_{t-j} \]}{Represents the theoretical peak of linear univariate stress forecasting.}
+\modelresultslide{ARMA(2,3)}{Forecasting_Graphs/05_ARMA_Optimized.png}{0.0206}{0.0316}{8.60}{0.2204}
+
+% M6
+\modeltheoryslide{Model 6: Seasonal ARIMA}{Adds seasonal cycles to the ARIMA equation. We used $s=7$.}{\[ \text{SARIMA}(2,1,3)(1,1,1)_7 \]}{Attempts to capture high-frequency periodicities in physiological stress.}
+\modelresultslide{SARIMA}{Forecasting_Graphs/06_SARIMA_Optimized.png}{0.0230}{0.0348}{9.55}{0.0537}
+
+% M7
+\modeltheoryslide{Model 7: SARIMAX}{Incorporates eXogenous physiological predictors directly into the equation.}{\[ \hat{y}_t = \text{SARIMA}_t + \boldsymbol{\beta} \mathbf{X}_{t-1} \]}{Tests if external sensors add value to the statistical linear model.}
+\modelresultslide{SARIMAX}{Forecasting_Graphs/07_SARIMAX_Optimized.png}{0.0252}{0.0399}{10.38}{-0.2433}
+
+% M8
+\modeltheoryslide{Model 8: Random Forest}{A non-parametric ensemble of 100 decision trees.}{\[ \hat{y}_t = \text{Avg}(T_1 \dots T_{100}) \]}{Robust to noise and handles non-linear interactions between signals.}
+\modelresultslide{Random Forest}{Forecasting_Graphs/08_Random_Forest_Forecast.png}{0.0275}{0.0377}{11.70}{-0.1089}
+
+% M9
+\modeltheoryslide{Model 9: XGBoost}{Gradient Boosting with sequential tree-error minimization.}{\[ \min \sum L(y_i, \hat{y}_i) + \sum \Omega(f_k) \]}{Industry standard for capturing complex physiological thresholds.}
+\modelresultslide{XGBoost}{Forecasting_Graphs/09_XGBoost_Forecast.png}{0.0230}{0.0323}{10.06}{0.1840}
+
+% M10
+\modeltheoryslide{Model 10: SVR}{Projects signals into higher dimensions via RBF kernels.}{\[ \min \frac{1}{2}||w||^2 + C \sum (\xi_i + \xi_i^*) \]}{Excellent at finding clean margins for stress onset detection.}
+\modelresultslide{SVR (RBF Kernel)}{Forecasting_Graphs/11_SVR_Forecast.png}{0.0208}{0.0314}{8.77}{0.2309}
+
+% M11
+\modeltheoryslide{Model 11: LSTM}{Recurrent architecture with Input, Output, and Forget gates.}{\[ f_t = \sigma(W_f \cdot [h_{t-1}, x_t] + b_f) \]}{Designed for temporal memory; captured long-range trends most effectively.}
+\modelresultslide{LSTM (Deep Learning)}{Forecasting_Graphs/10_LSTM_Forecast.png}{0.0198}{0.0298}{8.40}{0.3057}
+
+% M12
+\modeltheoryslide{Model 12: GRU}{Streamlined version of LSTM with only Update/Reset gates.}{\[ z_t = \sigma(W_z \cdot [h_{t-1}, x_t]) \]}{Highly efficient for high-frequency signal processing.}
+\modelresultslide{GRU (Deep Learning)}{Forecasting_Graphs/12_GRU_Forecast.png}{0.0202}{0.0301}{8.60}{0.2936}
+
+% M13
+\modeltheoryslide{Model 13: Quantile Regression}{Optimizes Pinball Loss to predict specific risk percentiles.}{\[ L_q = \max(q(y - \hat{y}), (q-1)(y - \hat{y})) \]}{Vital for safety-critical systems needing "worst-case" forecasts.}
+\modelresultslide{Quantile (95th Pctl)}{Forecasting_Graphs/13_Quantile_Risk_Boundaries.png}{0.0241}{N/A}{N/A}{N/A}
+
+% -------------------------
+% PART 7: ANALYTICAL DEPTH
+% -------------------------
+\sectiontitle{VII}{Analytical Depth: Sensitivity Studies}
+\imageslide{1. Feature Ablation Study}{EDA_Graphs/14_Feature_Ablation_Study.png}{Multivariate models (Full Context) outperformed univariate models by 2\%.}
+\imageslide{2. Forecast Horizon Decay}{EDA_Graphs/15_Horizon_Decay_Analysis.png}{Accuracy remains stable up to 30s due to skin conductance inertia.}
+\imageslide{3. Residual Diagnostic Analysis}{EDA_Graphs/16_Residual_Analysis.png}{Error histogram proving statistical validity and normal error centering.}
+\imageslide{4. Cross-Subject Generalization}{EDA_Graphs/17_Generalization_Test.png}{Quantifying the S2 to S3 personalization gap (Internal 0.0006 vs Cross 0.0246 MAE).}
+
+% -------------------------
+% PART 8: VERDICT
+% -------------------------
+\sectiontitle{VIII}{Final Verdict \& Conclusion}
+\begin{frame}{Comprehensive Model Ranking}
+    \begin{center} \renewcommand{\arraystretch}{1.1} \scriptsize
+    \begin{tabular}{clcccc}
+        \toprule
+        \rowcolor{Onyx!10} \textbf{Rank} & \textbf{Model} & \textbf{MAPE} & \textbf{MAE} & \textbf{RMSE} & \textbf{R$^2$} \\ \midrule
+        \rowcolor{WarmGold!20} \textbf{1} & \textbf{LSTM (Deep Learning)} & \textbf{8.40\%} & \textbf{0.0198} & \textbf{0.0298} & \textbf{0.3057} \\
+        2 & ARMA (2,3) & 8.60\% & 0.0206 & 0.0316 & 0.2204 \\
+        3 & GRU (Deep Learning) & 8.60\% & 0.0202 & 0.0301 & 0.2936 \\
+        4 & AR (p=2) & 8.66\% & 0.0210 & 0.0342 & 0.0840 \\
+        5 & Naive Baseline & 8.68\% & 0.0211 & 0.0345 & 0.0673 \\
+        6 & MA (q=3) & 8.72\% & 0.0209 & 0.0335 & 0.1236 \\
+        7 & SVR (Machine Learning) & 8.77\% & 0.0208 & 0.0314 & 0.2309 \\
+        8 & SARIMA & 9.55\% & 0.0230 & 0.0348 & 0.0537 \\
+        9 & SMA-10 & 9.62\% & 0.0229 & 0.0326 & 0.1716 \\
+        10 & XGBoost & 10.06\% & 0.0230 & 0.0323 & 0.1840 \\
+        \bottomrule
+    \end{tabular} \end{center}
+\end{frame}
+\imageslide{Performance Dashboard}{Forecasting_Graphs/99_Final_Model_Comparison.png}{Visual comparison of error metrics across the ensemble.}
+\conceptslide{Final Technical Insights}{Superiority of Temporal Capture}{
+    \item \textbf{LSTM/GRU Dominance:} Capturing sequential dependencies outperformed static vector models.
+    \item \textbf{Personalization Priority:} Stress signatures are highly individual and require calibration.
+    \item \textbf{Context Utility:} Adding external sensors significantly stabilized the forecast.
+}
+
+\begin{frame}[plain]
+    \begin{tikzpicture}[remember picture, overlay]
+        \fill[Onyx] (current page.north west) rectangle (current page.south east);
+        \fill[WarmGold] (current page.south west) -- ($(current page.south west) + (3,0)$) -- ($(current page.north west) + (0, 3)$) -- cycle;
+        \node[anchor=center, white] at (current page.center) {
+            \begin{minipage}{\textwidth}
+                \centering
+                {\fontsize{45}{55}\selectfont \textbf{Thank You}}\\[0.8cm]
+                {\color{WarmGold}\Large \textbf{Questions \& Technical Discussion}}\\[1.5cm]
+                {\color{Pearl!70}\small Applied Forecasting Methods \textbar\ DA-IICT}
+            \end{minipage}
+        };
+    \end{tikzpicture}
+\end{frame}
+
+\end{document}
